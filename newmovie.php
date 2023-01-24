@@ -5,11 +5,14 @@
   // Checa autenticação
   require_once("models/User.php");
   require_once("dao/UserDAO.php");
+  require_once("dao/CategoryDAO.php");
 
   // Verifica o token, se não for o correto redireciona para a home
   $auth = new UserDAO($conn, $BASE_URL);
-
   $userData = $auth->verifyToken();
+
+  $categories = new CategoryDAO($conn, $BASE_URL);
+  $cats = $categories->getAllCategories();
 
 ?>
 <div id="main-container" class="container-fluid">
@@ -34,11 +37,9 @@
           <label for="category">Categoria do filme:</label>
           <select class="form-control" name="category" id="cateogry">
               <option value="">Selecione</option>
-              <option value="Ação">Ação</option>
-              <option value="Drama">Drama</option>
-              <option value="Comédia">Comédia</option>
-              <option value="Fantasia / Ficção">Fantasia / Ficção</option>
-              <option value="Romance">Romance</option>
+              <?php foreach($cats as $cat): ?>
+                <option value="<?php echo $cat['id'] ?>"><?php echo $cat['description'] ?></option>
+              <?php endforeach ?>
           </select>
       </div>
       <div class="form-group">

@@ -43,18 +43,34 @@
 
     public function create(Movie $movie) {
 
+      var_dump($movie);
+      exit;
+
       $stmt = $this->conn->prepare("INSERT INTO movies (
-        title, description, image, trailer, length, users_id
+        title, description, image, trailer, length, user_id
       ) VALUES (
-        :title, :description, :image, :trailer, :length, :users_id
+        :title, :description, :image, :trailer, :length, :user_id
       )");
+
+      $stmt = $this->conn->prepare("INSERT INTO movies_categories (
+        movies_id, categories_id
+        ) VALUES (
+        :movies_id, :categories_id
+        )");
 
       $stmt->bindParam(":title", $movie->title);
       $stmt->bindParam(":description", $movie->description);
       $stmt->bindParam(":image", $movie->image);
       $stmt->bindParam(":trailer", $movie->trailer);
       $stmt->bindParam(":length", $movie->length);
-      $stmt->bindParam(":users_id", $movie->users_id);
+      $stmt->bindParam(":user_id", $movie->user_id);
+
+      $stmt->execute();
+
+      $movieId = $this->conn->lastInsertId();
+
+      $stmt->bindParam(":movies_id", $movieId);
+      $stmt->bindParam(":categories_id", $movie->category);
 
       $stmt->execute();
 
