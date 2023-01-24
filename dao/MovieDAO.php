@@ -44,16 +44,15 @@
     public function create(Movie $movie) {
 
       $stmt = $this->conn->prepare("INSERT INTO movies (
-        title, description, image, trailer, category, length, users_id
+        title, description, image, trailer, length, users_id
       ) VALUES (
-        :title, :description, :image, :trailer, :category, :length, :users_id
+        :title, :description, :image, :trailer, :length, :users_id
       )");
 
       $stmt->bindParam(":title", $movie->title);
       $stmt->bindParam(":description", $movie->description);
       $stmt->bindParam(":image", $movie->image);
       $stmt->bindParam(":trailer", $movie->trailer);
-      $stmt->bindParam(":category", $movie->category);
       $stmt->bindParam(":length", $movie->length);
       $stmt->bindParam(":users_id", $movie->users_id);
 
@@ -79,7 +78,6 @@
       $stmt->bindParam(":description", $movie->description);
       $stmt->bindParam(":trailer", $movie->trailer);
       $stmt->bindParam(":image", $movie->image);
-      $stmt->bindParam(":category", $movie->category);
       $stmt->bindParam(":trailer", $movie->trailer);
       $stmt->bindParam(":length", $movie->length);
       $stmt->bindParam(":id", $movie->id);
