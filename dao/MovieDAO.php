@@ -54,9 +54,9 @@
 
       $stmt = $this->conn->prepare("INSERT INTO movies_categories (
         movies_id, categories_id
-        ) VALUES (
+      ) VALUES (
         :movies_id, :categories_id
-        )");
+      )");
 
       $stmt->bindParam(":title", $movie->title);
       $stmt->bindParam(":description", $movie->description);
